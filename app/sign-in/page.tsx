@@ -76,7 +76,7 @@ export default function SignIn() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="you@gmail.com"
                 required
                 className="border-gray-300 focus:border-primary focus:ring-primary"
               />

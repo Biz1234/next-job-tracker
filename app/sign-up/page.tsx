@@ -26,7 +26,7 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     setError("");
@@ -40,91 +40,93 @@ export default function SignUp() {
       });
 
       if (result.error) {
-        setError(result.error.message ?? "Failed to sign up");
+        setError(result.error.message ?? "Failed to sign up. Please try again.");
       } else {
         router.push("/dashboard");
       }
     } catch (err) {
-      setError("An unexpected error occurred");
+      setError("An unexpected network error occurred.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-md border-gray-200 shadow-lg">
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-black">
+          <CardTitle className="text-2xl font-bold tracking-tight">
             Sign Up
           </CardTitle>
-          <CardDescription className="text-gray-600">
-            Create an account to start tracking your job applications
+          <CardDescription>
+            Create an account to start tracking your job applications.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <CardContent className="space-y-4">
             {error && (
-              <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+              <div className="rounded-md bg-destructive/15 p-3 text-sm font-medium text-destructive">
                 {error}
               </div>
             )}
+            
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-gray-700">
-                Name
-              </Label>
+              <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="ansif abebe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="border-gray-300 focus:border-primary focus:ring-primary"
+                disabled={loading}
+                autoComplete="name"
               />
             </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-700">
-                Email
-              </Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="you@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border-gray-300 focus:border-primary focus:ring-primary"
+                disabled={loading}
+                autoComplete="email"
               />
             </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-700">
-                Password
-              </Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
+                placeholder="********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={8}
-                className="border-gray-300 focus:border-primary focus:ring-primary"
+                disabled={loading}
+                autoComplete="new-password"
               />
             </div>
           </CardContent>
+          
           <CardFooter className="flex flex-col space-y-4">
             <Button
               type="submit"
-              className="w-full bg-primary hover:bg-primary/90"
+              className="w-full"
               disabled={loading}
             >
               {loading ? "Creating account..." : "Sign Up"}
             </Button>
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
               <Link
                 href="/sign-in"
-                className="font-medium text-primary hover:underline"
+                className="font-medium text-primary hover:underline hover:text-primary/90 transition-colors"
               >
                 Sign in
               </Link>
